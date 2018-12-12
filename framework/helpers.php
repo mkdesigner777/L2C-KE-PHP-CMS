@@ -12,3 +12,11 @@ function db_query($sql_string)
 	return mysqli_query(db_connect(), $sql_string);
 }
 
+function db_select($query){
+	$result = [];
+	$db_result = db_query($query);
+	while(($data = mysqli_fetch_object($db_result)) != false){
+		array_push($result, $data);
+	}
+	return $result;
+}
