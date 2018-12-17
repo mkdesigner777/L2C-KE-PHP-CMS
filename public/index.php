@@ -16,6 +16,7 @@ $pages = db_select("SELECT * FROM pages");
 	<title>Blog Template for Bootstrap</title>
 
 	<!-- Bootstrap core CSS -->
+	<link href="../public/vendor/bootstrap/css/bootstrap.css" rel="stylesheet">
 	<link href="../public/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
 </head>
@@ -37,6 +38,7 @@ $pages = db_select("SELECT * FROM pages");
 		<h1 class="blog-title">The Bootstrap Blog</h1>
 		<p class="lead blog-description">The official example template of creating a blog with Bootstrap.</p>
 	</div>
+
 
 	<div class="row">
 
@@ -69,18 +71,17 @@ $pages = db_select("SELECT * FROM pages");
 
 </div><!-- /.container -->
 
+
 <footer class="blog-footer">
 	<p>Blog template built for <a href="http://getbootstrap.com">Bootstrap</a> by <a href="https://twitter.com/mdo">@mdo</a>.</p>
-	<p>
-		<a href="#">Back to top</a>
-	</p>
+	<p><a href="#">Back to top</a></p>
 </footer>
 
 
 <!-- Bootstrap core JavaScript
 ================================================== -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-<script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
+<script>window.jQuery || document.write('<script src="../../assets/vendor/bootstrap/jquery.min.js"><\/script>')</script>
 <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
 
 </body>
