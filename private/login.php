@@ -12,7 +12,7 @@
 <body>
 <div class="container">
 
-	<form class="form-signin" method="POST" action=”login_check.php">
+	<form class="form-signin" method="POST" action="login_check.php">
 		<h2 class="form-signin-heading">Please sign in</h2>
 
 		<label for="inputEmail" class="sr-only">Email address</label>
