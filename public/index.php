@@ -18,10 +18,12 @@ $pages = db_select("SELECT * FROM pages");
 	<!-- Bootstrap core CSS -->
 	<link href="../public/vendor/bootstrap/css/bootstrap.css" rel="stylesheet">
 	<link href="../public/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+	<link href="assets/css/main.css" rel="stylesheet">
 
 </head>
 
 <body>
+
 
 <div class="blog-masthead">
 	<div class="container">
@@ -73,7 +75,7 @@ $pages = db_select("SELECT * FROM pages");
 
 
 <footer class="blog-footer">
-	<p>Blog template built for <a href="http://getbootstrap.com">Bootstrap</a> by <a href="https://twitter.com/mdo">@mdo</a>.</p>
+	<p>Blog template built for <a href="http://getbootstrap.com">Bootstrap</a> by <a href="https://twitter.com/mdo">MilosK</a>.</p>
 	<p><a href="#">Back to top</a></p>
 </footer>
 

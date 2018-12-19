@@ -49,7 +49,7 @@ if(!empty($_POST)){
 				}
 				break;
 		}
-
+				header('Location: users.php');
 	}
 }
 	$users = db_select("SELECT * FROM users");
@@ -66,6 +66,15 @@ if(!empty($_POST)){
 	<link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
+<?php require_once dirname(__FILE__)."/parts/header.php"; ?>
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-sm-12 col-md-12 main">
+			<h1 class="page-header">Users</h1>
+
+		</div>
+	</div>
+</div>
 <div class="container-fluid">
 	<div class="row">
 		<div class="col-sm-12 col-md-12 main">
@@ -77,6 +86,7 @@ if(!empty($_POST)){
 						<th>ID</th>
 						<th>Email</th>
 						<th>Nickname</th>
+						<th>ACTION</th>
 					</tr>
 					</thead>
 					<tbody>
@@ -86,6 +96,7 @@ if(!empty($_POST)){
 							<td> <?php echo $user->ID; ?> </td>
 							<td> <?php echo $user->email; ?> </td>
 							<td> <?php echo $user->nickname; ?> </td>
+							<td><a href=”user.php?id=<?php echo $user->ID; ?>”>Update</a></td>
 						</tr>
 					<?php } ?>
 

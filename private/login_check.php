@@ -16,8 +16,8 @@ if(!empty($_POST)){
 				// email aj heslo suhlasia
 				session_start();
 				$_SESSION['email'] = $user->email;
-				$_SESSION['id'] = $user->id;
-				header("Location: index.php");
+				$_SESSION['id'] = $user->ID;
+				header('Location: index.php');
 
 			} else {
 				echo "nesuhlasi heslo";

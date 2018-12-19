@@ -1,46 +1,57 @@
 <?php
 require_once dirname(__FILE__)."/../framework/loggedin.php";
 require dirname(__FILE__)."/../framework/helpers.php";
-	if (!empty($_POST))
-	{
-		if (!empty($_POST['action']))
-		{
-			switch ($_POST['action'])
-			{
-				case 'insert' :
-					if (!empty($_POST['title'] && $_POST['content'] && $_POST['User_ID'] && $_POST['menu_label'] && $_POST['menu_order']))
-					{
+if(!empty($_POST)){
+	if(!empty($_POST['action'])){
+		switch($_POST['action']){
+			case 'insert':
+				if(!empty($_POST['title']) && !empty($_POST['content']) && !empty($_POST['user_id']) && !empty($_POST['menu_label']) && !empty($_POST['menu_order']) ){
 					// db_query() > INSERT INTO
-					db_query("INSERT INTO `pages` (`title`, `content`, `User_ID`, `menu_label`, `menu_order`) 
-										VALUES ('".($_POST['title'])."','".($_POST['content'])."','".($_POST['User_ID'])."',
-										'".($_POST['menu_label'])."','".($_POST['menu_order'])."')");
-			}
-					break;
-				case 'update' :
-					if (!empty($_POST['id']))
-					{
-						if (!empty($_POST['title'] && $_POST['content'] && $_POST['User_ID'] && $_POST['menu_label'] && $_POST['menu_order']))
-						{
-							// db_query() > UPDATE User SET ...
-							db_query("UPDATE `pages` SET 'title' = '".($_POST(['title'])."','content' = '".($_POST['content'])."', 
-							'User_ID' = '".($_POST['User_ID'])."', 'menu_label' = '".($_POST['menu_label'])."', 
-							'menu_order' = '".($_POST['menu_order'])."' 
-							WHERE ID = '".($_POST['ID'])."'"));
-						}
+					$db_query =sprintf("INSERT INTO `pages` (`title`, `content`, `User_ID`, `menu_label`, `menu_order`) VALUES ('%s','%s',%d,'%s',%d)",
+						$_POST['title'],
+						$_POST['content'],
+						$_POST['user_id'],
+						$_POST['menu_label'],
+						$_POST['menu_order']
+					);
+					db_query($db_query);
+				}
+
+				break;
+			case 'update':
+				if(!empty($_POST['id'])){
+					if(!empty($_POST['title'] && !empty($_POST['content']) && !empty($_POST['user_id']) && $_POST['menu_label'] && $_POST['menu_order'] )){
+						// db_query() > UPDATE Users SET ...
+						$db_query = sprintf("UPDATE `pages` SET `title`= '%s', `content`= '%s', `User_ID`= '%s', `menu_label`= '%s', `menu_order`= '%s'  WHERE ID= %d",
+							$_POST['title'],
+							$_POST['content'],
+							$_POST['user_id'],
+							$_POST['menu_label'],
+							$_POST['menu_order'],
+							$_POST['id']
+						);
+						db_query($db_query);
 					}
-					break;
-				case 'delete' :
-					if (!empty($_POST['ID']))
-					{
-						// db_query() > DELETE FROM Users ...
-						db_query("DELETE FROM `pages` WHERE ID = '".($_POST['ID'])."'");
-					}
-						break;
-			}
+				}
+				break;
+			case 'delete':
+				if(!empty($_POST['id'])){
+					// db_query() > DELETE FROM Users ...
+					db_query(
+						sprintf("DELETE FROM pages WHERE ID=%d",
+							$_POST['id']
+						)
+					);
+				}
+				break;
 		}
+		header('Location: pages.php');
 	}
-	$pages = db_select("SELECT * FROM pages");
+}
+$pages = db_select("SELECT * FROM pages");
 ?>
+<!DOCTYPE html>
+<html lang="en">
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -53,15 +64,19 @@ require dirname(__FILE__)."/../framework/helpers.php";
 </head>
 
 <body>
-
+<?php require_once dirname(__FILE__)."/parts/header.php"; ?>
 <div class="container-fluid">
 	<div class="row">
 		<div class="col-sm-12 col-md-12 main">
 			<h1 class="page-header">Pages</h1>
 
-	<!-- ERROR  !!! -->
+		</div>
+	</div>
+</div>
 
-		<a href="page.phpid=<?php echo $page->id ?>">Add New Page</a>
+			<!-- ERROR !!!!  -->
+
+			<a href="page.php">Add New Page</a>
 
 			<div class="table-responsive">
 				<table class="table table-striped">
@@ -73,22 +88,32 @@ require dirname(__FILE__)."/../framework/helpers.php";
 						<th>User_ID</th>
 						<th>menu_label</th>
 						<th>menu_order</th>
+						<th>AUTHOR</th>
+						<th>ACTIONS</th>
 					</tr>
 					</thead>
 					<tbody>
 
-			<?php foreach ($pages as $page){ ?>
+					<?php foreach($pages as $page){ ?>
 
-			<tr>
-				<th><?php echo $page->ID ?></th>
-				<th><?php echo $page->title ?></th>
-				<th><?php echo $page->content ?></th>
-				<th><?php echo $page->User_ID ?></th>
-				<th><?php echo $page->menu_label ?></th>
-				<th><?php echo $page->menu_order ?></th>
-			</tr>
+						<tr>
+							<td> <?php echo $page->ID; ?> </td>
+							<td> <?php echo $page->title; ?> </td>
+							<td> <?php echo $page->content; ?> </td>
+							<td> <?php echo $page->User_ID; ?> </td>
+							<td> <?php echo $page->menu_label; ?> </td>
+							<td> <?php echo $page->menu_order; ?> </td>
 
-			<?php } ?>
+							<?php
+							$user_result = db_query("SELECT * FROM users WHERE id=".$page->User_ID);
+							$user = mysqli_fetch_object($user_result);
+							?>
+						
+							<td><a href=\"user.php?ID=<?php echo  $user->ID ?>\"><?php echo  $user->nickname ?></a> </td>
+							<td><a href=”page.php?id=<?php echo $page->ID ?>”>Update</a> </td>
+						</tr>
+
+					<?php } ?>
 
 					</tbody>
 				</table>
@@ -103,4 +128,3 @@ require dirname(__FILE__)."/../framework/helpers.php";
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
 </body>
-</html>
